@@ -1,0 +1,154 @@
+/* ==========================================================================
+   Chibicon Admin — app.css
+   Semua global styles, dark mode, badge, transisi
+   ========================================================================== */
+
+/* ── Base ─────────────────────────────────────────────────────────────────── */
+body {
+    font-family: 'Geist', 'Inter', sans-serif;
+    background-color: #F9FAFB;
+}
+
+.material-symbols-outlined {
+    font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+}
+.icon-fill { font-variation-settings: 'FILL' 1; }
+
+/* Scrollbar hide */
+.no-scrollbar::-webkit-scrollbar { display: none; }
+.no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+
+/* Modal transitions */
+.modal-overlay { transition: opacity 0.3s ease-out; }
+.modal-content { transition: transform 0.3s ease-out, opacity 0.3s ease-out; }
+
+/* Toast */
+.toast-enter        { transform: translateY(-100%); opacity: 0; }
+.toast-enter-active { transform: translateY(0); opacity: 1; transition: all 300ms ease-out; }
+.toast-exit         { transform: translateY(0); opacity: 1; }
+.toast-exit-active  { transform: translateY(-100%); opacity: 0; transition: all 300ms ease-in; }
+
+/* Loading / disabled button */
+.btn-loading { opacity: 0.65; pointer-events: none; cursor: not-allowed; }
+
+/* Sortable th */
+th[onclick] { cursor: pointer; user-select: none; }
+th[onclick]:hover { filter: brightness(0.96); }
+
+/* ── Status Badges ────────────────────────────────────────────────────────── */
+.badge-success { background: #DEF7EC; color: #03543F; }
+.badge-warning { background: #FDF6B2; color: #723B13; }
+.badge-error   { background: #FDE8E8; color: #9B1C1C; }
+.badge-info    { background: #E1EFFE; color: #1E429F; }
+.badge-neutral { background: #f3f4f6; color: #374151; }
+
+/* ── DARK MODE ────────────────────────────────────────────────────────────── */
+html.dark body                          { background-color: #111827; color: #e5e7eb; }
+html.dark aside                         { background-color: #1f2937 !important; border-color: #374151 !important; }
+html.dark header                        { background-color: #1f2937 !important; border-color: #374151 !important; }
+html.dark main                          { background-color: #111827 !important; }
+
+/* Surface colours */
+html.dark .bg-surface-container-lowest  { background-color: #1f2937 !important; }
+html.dark .bg-surface-container-low     { background-color: #243044 !important; }
+html.dark .bg-surface-container         { background-color: #243044 !important; }
+html.dark .bg-surface-container-high    { background-color: #374151 !important; }
+html.dark .bg-surface-container-highest { background-color: #4b5563 !important; }
+html.dark .bg-surface-bright            { background-color: #1f2937 !important; }
+html.dark .bg-surface-variant           { background-color: #374151 !important; }
+html.dark .bg-background                { background-color: #111827 !important; }
+html.dark .bg-surface                   { background-color: #111827 !important; }
+
+/* Text colours */
+html.dark .text-on-surface              { color: #f3f4f6 !important; }
+html.dark .text-on-surface-variant      { color: #9ca3af !important; }
+html.dark .text-on-background           { color: #f3f4f6 !important; }
+
+/* Borders */
+html.dark .border-outline-variant       { border-color: #374151 !important; }
+html.dark .border-outline               { border-color: #4b5563 !important; }
+html.dark .divide-outline-variant > *   { border-color: #374151 !important; }
+
+/* PRIMARY stays RED — never override to yellow */
+html.dark .bg-primary                   { background-color: #b61722 !important; }
+html.dark .text-primary                 { color: #ff6b6b !important; }
+html.dark .border-primary               { border-color: #b61722 !important; }
+html.dark .bg-primary-fixed             { background-color: #3a0008 !important; }
+html.dark .text-on-primary-fixed        { color: #ffb3ad !important; }
+html.dark .bg-primary-container         { background-color: #93000a !important; }
+html.dark .bg-primary-fixed-dim         { background-color: #ffb3ad !important; }
+
+/* Shadows */
+html.dark .shadow-sm { box-shadow: 0 1px 4px rgba(0,0,0,0.5) !important; }
+
+/* Status badges dark */
+html.dark .badge-success { background: #1a3d2b; color: #6ee7b7; }
+html.dark .badge-warning { background: #3d3000; color: #fde68a; }
+html.dark .badge-error   { background: #3d0000; color: #fca5a5; }
+html.dark .badge-info    { background: #1e3a5f; color: #93c5fd; }
+html.dark .badge-neutral { background: #374151; color: #d1d5db; }
+
+/* Override hardcoded Tailwind arbitrary bg/text colours used in status badges */
+html.dark .bg-\[\#DEF7EC\]  { background-color: #1a3d2b !important; }
+html.dark .text-\[\#03543F\] { color: #6ee7b7 !important; }
+html.dark .bg-\[\#FDF6B2\]  { background-color: #3d3000 !important; }
+html.dark .text-\[\#723B13\] { color: #fde68a !important; }
+html.dark .bg-\[\#FDE8E8\]  { background-color: #3d0000 !important; }
+html.dark .text-\[\#9B1C1C\] { color: #fca5a5 !important; }
+html.dark .bg-\[\#E1EFFE\]  { background-color: #1e3a5f !important; }
+html.dark .text-\[\#1E429F\] { color: #93c5fd !important; }
+html.dark .bg-\[\#F9FAFB\]  { background-color: #1f2937 !important; }
+
+/* Form inputs dark */
+html.dark input,
+html.dark select,
+html.dark textarea {
+    background-color: #1f2937 !important;
+    color: #f3f4f6 !important;
+    border-color: #374151 !important;
+}
+html.dark input::placeholder,
+html.dark textarea::placeholder { color: #6b7280 !important; }
+
+/* Table dark */
+html.dark table { color: #e5e7eb; }
+html.dark tbody tr:hover td { background-color: rgba(255,255,255,0.04); }
+
+/* ── Notification dropdown in dark ────────────────────────────────────────── */
+html.dark #notifPanel {
+    background-color: #1f2937 !important;
+    border-color: #374151 !important;
+}
+
+/* ── Quick Action modal in dark ─────────────────────────────────────────────*/
+html.dark #quickActionModal .bg-surface-container-lowest { background-color: #1f2937 !important; }
+
+/* ── Modal backgrounds in dark ───────────────────────────────────────────── */
+html.dark .modal-content { background-color: #1f2937; }
+html.dark .modal-content .bg-surface-bright { background-color: #1a2332 !important; }
+html.dark .modal-content h3 { color: #f3f4f6; }
+html.dark .modal-content label { color: #d1d5db; }
+
+/* ── <select> option text in dark (native fix) ───────────────────────────── */
+html.dark select option { background-color: #1f2937; color: #f3f4f6; }
+
+/* ── Tab active/inactive in dark ─────────────────────────────────────────── */
+html.dark .tab-btn.active,
+html.dark .tab-btn.border-primary { color: #ff6b6b !important; }
+html.dark .tab-btn { color: #9ca3af; }
+
+/* ── Aside / sidebar card in dark ───────────────────────────────────────── */
+html.dark aside .bg-surface-container-lowest { background-color: #1f2937 !important; }
+
+/* ── tbody hover rows in dark (ensure text visible) ─────────────────────── */
+html.dark tbody tr { color: #e5e7eb; }
+html.dark tbody tr:hover { background-color: rgba(255,255,255,0.04) !important; }
+
+/* ── Filter / search bar in dark ─────────────────────────────────────────── */
+html.dark .focus-within\:ring-primary { --tw-ring-color: #b61722; }
+
+/* ── Print: hide browser header/footer (URL + title) ─────────────────────── */
+@media print {
+    @page { margin: 0; }
+    body  { margin: 1.8cm; }
+}
