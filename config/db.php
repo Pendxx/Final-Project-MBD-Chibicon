@@ -6,7 +6,7 @@ if (session_status() === PHP_SESSION_NONE) {
     session_start();
 }
 
-$host = '127.0.0.1:3307';
+$host = 'chibicon-db';
 $user = 'root';
 $pass = '';
 $dbname = 'chibicon_db';

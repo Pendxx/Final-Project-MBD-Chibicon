@@ -1,0 +1,19 @@
+# Dependency directories
+node_modules/
+
+# IDE files
+.vscode/
+.idea/
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Project specific
+graphify-out/
+.env
+*.log
+
+# PHP files
+composer.lock
+vendor/

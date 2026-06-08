@@ -1,0 +1,61 @@
+Proyek Akhir Mata Kuliah Manajemen Basis Data-D
+Sistem Manajemen Event “Chibicon”
+
+Dosen Pengampu:
+Shintami Chusnul Hidayati, S.Kom., M.Sc.,. Ph.D.
+
+Anggota Kelompok DBWeebs:
+5025241040 - Ja’far Balyan Al Karim
+5025241135 - Farikh Muhammad Fauzan
+5025241227 - Safa Maulana Efendi
+Departemen Teknik Informatika
+Fakultas Teknik Elektro dan Informatika Cerdas
+2026
+
+Latar Belakang
+Bagas adalah seorang ketua komunitas pop-kultur Jepang yang aktif menyelenggarakan event jejepangan berskala besar bernama "Chibicon". Tahun ini, Chibicon menargetkan lebih dari 5.000 pengunjung per hari. Acara ini berlangsung selama dua hari dan dimeriahkan oleh kompetisi cosplay, panggung anisong, meet & greet eksklusif, serta puluhan booth yang menjual merchandise anime dan makanan khas festival Jepang.
+Berkaca dari acara tahun lalu yang masih menggunakan pencatatan manual (spreadsheet dan nota kertas), sering terjadi masalah operasional yang fatal. Beberapa di antaranya adalah tiket VIP yang terjual melebihi kuota (oversold) karena admin lambat memperbarui sisa stok, jadwal panggung yang bentrok, hingga data pembayaran tenant yang terselip sehingga mereka kebingungan mencari letak tenda di hari H.
+Untuk memastikan acara tahun ini berjalan profesional, Bagas memutuskan untuk beralih dari pencatatan manual ke sistem basis data relasional terpadu yang dapat melacak seluruh operasional secara real-time.
+
+Proses Bisnis dan Aturan Transaksi
+Dalam operasional sistem yang baru, terdapat aturan bisnis (business rules) yang harus dipenuhi:
+* Pembelian Tiket Multipel (Keranjang Belanja): Pengunjung dapat membeli lebih dari satu jenis tiket dengan jumlah kuantitas yang berbeda dalam satu kali transaksi (satu nomor invoice). Misalnya, seorang pengunjung dapat membeli 2 lembar tiket Presale Day-1 sekaligus 1 lembar tiket VIP 2-Days Pass dalam satu struk pembayaran.
+* Manajemen Panggung (Many-to-Many): Chibicon mengundang berbagai bintang tamu (Guest Star) dari kategori berbeda (Cosplayer, Band, VTuber, Idol). Setiap kegiatan di panggung memiliki jadwal yang ketat. Satu sesi acara (misalnya: Talkshow Cosplay) bisa diisi oleh lebih dari satu bintang tamu. Sebaliknya, satu bintang tamu bisa tampil di beberapa sesi acara yang berbeda (misalnya: tampil di sesi Meet & Greet pada pagi hari, lalu tampil lagi di sesi Main Performance pada malam hari).
+* Penyewaan Lapak Bazar (Tenant & Booth): Acara ini menyediakan area bazar dengan puluhan booth (lapak). Setiap booth memiliki ukuran, harga sewa, dan lokasi (Indoor/Outdoor) yang berbeda. Seorang tenant (pemilik usaha) diizinkan menyewa lebih dari satu nomor booth sekaligus jika mereka membutuhkan area yang luas.
+
+Spesifikasi Kebutuhan Sistem
+Bagas menugaskan Anda sebagai Database Administrator untuk merancang sistem basis data relasional. Sistem harus mengakomodasi penyimpanan entitas beserta atribut pendukung berikut secara rinci:
+1. Data Pengunjung: Sistem harus mendata setiap pengunjung yang membuat akun di portal Chibicon. Data yang wajib disimpan mencakup ID Pengunjung, Nomor Identitas (KTP/Kartu Pelajar untuk validasi tiket VIP), nama lengkap, email aktif, nomor WhatsApp, dan tanggal pendaftaran akun.
+2. Data Staf Panitia: Sistem harus mencatat data staf panitia yang bertugas melayani transaksi dan memverifikasi pembayaran. Data mencakup ID Staf, nama staf, nomor HP, dan divisi tugas (misalnya: Kasir, Admin Verifikasi, atau Ticketing).
+3. Data Katalog Tiket: Mendata seluruh varian tiket yang dijual oleh panitia. Atribut yang dibutuhkan adalah ID Tiket, nama/jenis tiket (contoh: Presale 1, Reguler Day 2, VIP Pass), harga satuan tiket, fasilitas/deskripsi (benefit), serta total kuota tiket yang tersedia.
+4. Data Transaksi Pembayaran (Header): Mencatat riwayat transaksi secara umum (satu pengunjung = satu nomor invoice transaksi). Data yang disimpan meliputi Nomor Transaksi (Primary Key), tanggal dan waktu transaksi, total tagihan keseluruhan, metode pembayaran (QRIS, Transfer Bank, Tunai), status pembayaran (Menunggu Pembayaran, Lunas, Dibatalkan), serta Foreign Key ke Pengunjung yang membeli dan Staf yang melayani transaksi tersebut.
+5. Data Detail Keranjang Tiket (Detail Transaksi): Karena satu transaksi bisa memuat banyak jenis tiket, sistem memerlukan tabel detail untuk merekam isi "keranjang". Data ini mencatat Nomor Transaksi yang bersangkutan, ID Tiket apa saja yang dibeli, jumlah kuantitas per tiket, dan subtotal harga per baris barang.
+6. Data Bintang Tamu (Guest Star): Mengelola profil pengisi acara untuk publikasi dan akomodasi. Mencakup ID Bintang Tamu, nama panggung, kategori talent (Cosplayer/Idol/Band), asal agensi/komunitas, asal negara, dan kontak manajer.
+7. Data Jadwal Acara (Rundown): Mengelola rundown acara di panggung. Sistem mencatat ID Jadwal, nama kegiatan (contoh: Coswalk Competition, Idol Performance), jam mulai, jam selesai, dan lokasi panggung (Main Stage / Mini Stage). Sistem juga harus bisa mengakomodasi relasi bahwa kegiatan tertentu diisi oleh bintang tamu tertentu (ingat aturan Many-to-Many di atas).
+8. Data Tenant (Pemilik Usaha): Mendata profil pemilik usaha yang akan berjualan. Mencakup ID Tenant, nama brand atau toko, nama penanggung jawab (PIC), nomor HP PIC, dan kategori jualan (F&B / Merchandise / Komunitas).
+9. Data Booth (Lapak Lapangan): Mendata seluruh aset tenda atau area yang disewakan. Memuat ID Booth (contoh: A01, A02, F01), lokasi (Indoor/Outdoor), ukuran luas (contoh: 2x2m atau 3x3m), dan harga sewa booth tersebut. Sistem juga harus bisa mencatat booth mana yang disewa oleh tenant mana.
+
+Daftar Entitas
+1. Pengunjung (id PK, nomor_identitas, nama_lengkap, email, telepon, tgl_wkt_daftar)
+2. Panitia (id PK, nama_lengkap, telepon, divisi_id FK)
+3. Divisi (id PK, nama_divisi)
+4. Tiket (id PK, nama_tiket, harga, deskripsi, kuota)
+5. Transaksi (id PK, tgl_wkt_transaksi, total, metode_pembayaran_id FK, status_pembayaran_id FK, pengunjung_id FK, panitia_id FK)
+6. Metode_Pembayaran (id PK, nama_metode)
+7. Status_pembayaran (id PK, nama_status)
+8. Detail_Transaksi (id PK, kuantitas, subtotal, tiket_id FK, transaksi_id FK)
+9. Guest_Star_Rundown (id PK, guest_star_id FK, rundown_id FK)
+10. Guest_Star (id PK, nama_panggung, agensi, negara, kontak_manager, kategori_talent_id FK)
+11. Kategori_Talent (id PK, nama_kategori)
+12. Rundown (id PK, nama_kegiatan, tgl_wkt_mulai, tgl_wkt_akhir, lokasi_panggung_id FK, panitia_id FK)
+13. Lokasi_Panggung (id PK, nama_lokasi)
+14. Tenant (id PK, nama_tenant, nama_PIC, telepon_PIC, kategori_usaha_id FK, panitia_id FK)
+15. Kategori_Usaha (id PK, nama_usaha)
+16. Booth (id PK, nama_booth, harga_sewa, lokasi_booth_id FK, tenant_id FK)
+17. Lokasi_Booth (id PK, nama_lokasi)
+
+Analisis Normalisasi:
+- Proyek ini telah memenuhi standar 3NF (Third Normal Form).
+- Data referensi dipisah ke lookup tables untuk mengurangi redundansi.
+- Junction tables digunakan untuk relasi Many-to-Many (misal: Guest_Star_Rundown).
+- Header & Detail digunakan untuk efisiensi data transaksi.

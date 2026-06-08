@@ -6,7 +6,7 @@ require_once __DIR__ . '/../config/google.php';
 // Verify state token to prevent CSRF
 if (!isset($_GET['state']) || $_GET['state'] !== ($_SESSION['oauth_state'] ?? '')) {
     $_SESSION['login_error'] = 'Sesi tidak valid. Silakan coba lagi.';
-    header('Location: ../login.php');
+    header('Location: ../admin/login.php');
     exit;
 }
 unset($_SESSION['oauth_state']);
@@ -14,13 +14,13 @@ unset($_SESSION['oauth_state']);
 // Handle error from Google
 if (isset($_GET['error'])) {
     $_SESSION['login_error'] = 'Login Google dibatalkan: ' . htmlspecialchars($_GET['error']);
-    header('Location: ../login.php');
+    header('Location: ../admin/login.php');
     exit;
 }
 
 if (!isset($_GET['code'])) {
     $_SESSION['login_error'] = 'Kode otorisasi tidak ditemukan.';
-    header('Location: ../login.php');
+    header('Location: ../admin/login.php');
     exit;
 }
 
@@ -35,7 +35,7 @@ $token_data = google_request('https://oauth2.googleapis.com/token', [
 
 if (!isset($token_data['access_token'])) {
     $_SESSION['login_error'] = 'Gagal mendapatkan token akses dari Google.';
-    header('Location: ../login.php');
+    header('Location: ../admin/login.php');
     exit;
 }
 
@@ -44,7 +44,7 @@ $profile = google_get('https://www.googleapis.com/oauth2/v2/userinfo', $token_da
 
 if (!isset($profile['email'])) {
     $_SESSION['login_error'] = 'Gagal mendapatkan info profil dari Google.';
-    header('Location: ../login.php');
+    header('Location: ../admin/login.php');
     exit;
 }
 
@@ -60,7 +60,7 @@ $_SESSION['user'] = [
 $_SESSION['toast']      = 'Selamat datang, ' . $profile['given_name'] . '! 👋';
 $_SESSION['toast_type'] = 'success';
 
-header('Location: ../index.php');
+header('Location: ../admin/dashboard.php');
 exit;
 
 // ── Helpers ────────────────────────────────────────────────────────────────────

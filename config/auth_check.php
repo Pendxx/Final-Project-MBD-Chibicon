@@ -15,7 +15,7 @@ if (!isset($_SESSION['user'])) {
         str_replace($mbd_root, '', $script_dir), DIRECTORY_SEPARATOR
     );
     $prefix = str_repeat('../', max(0, $rel_depth));
-    header('Location: ' . $prefix . 'login.php');
+    header('Location: ' . $prefix . 'admin/login.php');
     exit;
 }
 

@@ -1,10 +1,11 @@
 <?php
 // login.php - Halaman Login Chibicon Admin (Local only)
-require_once __DIR__ . '/config/db.php';
+require_once __DIR__ . '/../config/db.php';
+require_once __DIR__ . '/../config/csrf.php';
 
 // If already logged in, redirect to dashboard
 if (isset($_SESSION['user'])) {
-    header('Location: index.php');
+    header('Location: dashboard.php');
     exit;
 }
 
@@ -12,6 +13,8 @@ $error = '';
 
 // Handle local admin login
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    csrf_validate();
+
     $username = trim($_POST['username'] ?? '');
     $password = $_POST['password'] ?? '';
 
@@ -26,7 +29,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         ];
         $_SESSION['toast']      = 'Selamat datang kembali, Administrator! 👋';
         $_SESSION['toast_type'] = 'success';
-        header('Location: index.php');
+        header('Location: dashboard.php');
         exit;
     }
     $error = 'Username atau password salah.';
@@ -150,6 +153,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
             <!-- Login Form -->
             <form action="login.php" method="POST" class="space-y-4">
+                <?php csrf_field(); ?>
                 <div>
                     <label class="block text-white/60 text-xs font-medium mb-1.5 uppercase tracking-wider">Username</label>
                     <div class="relative">
